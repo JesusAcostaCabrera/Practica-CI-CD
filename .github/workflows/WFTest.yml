@@ -1,0 +1,17 @@
+on: push
+name: WFTest
+jobs:
+  deploy:
+    name: deploy a cluster
+    runs-on: ubuntu-latests
+    steps:
+    - uses: actions/checkout@master
+    - name: build y push a docker
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME}}
+        password: ${{ secrets.DOCKER_PASSWORD}}
+        repository: ${{ github.repository  }}
+        tag_with_ref: true
+        tag_with_sha: true
+        tags: ${{ github.sha  }}
